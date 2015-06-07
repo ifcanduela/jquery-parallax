@@ -94,7 +94,7 @@
             // image styling
             $base.css('transform', 'scale(' + settings.imageScale + ')');
 
-            if (setings.hideOriginalImage) {
+            if (settings.hideOriginalImage) {
                 $base.css('opacity', 0);
             }
 
