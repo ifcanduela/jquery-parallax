@@ -86,7 +86,7 @@
             });
 
             // image styling
-            $base.css('transform', 'scale(1.1)');
+            $base.css('transform', 'scale(' + settings.imageScale + ')');
 
             // create the clones
             for (var i = 1; i <= settings.shadowCount; i++) {
