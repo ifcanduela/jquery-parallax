@@ -25,6 +25,9 @@
  * - hideOnMouseLeave: Hide the image clones when the cursor leaves the container.
  *     Default is true.
  *
+ * - hideOriginalImage: Hide the original image after creating the clones. Default
+ *     is true. Does not have a big impact on anything.
+ *
  * - maxRotationDegree: Degree of rotation of the image. Default is 10. Positive
  *     values push down on the corner of the image closer to the mouse pointer, while
  *     negative values lift the closest corner up.
@@ -54,6 +57,7 @@
             shadowCount: 4,
             clipShadows: true,
             hideOnMouseLeave: true,
+            hideOriginalImage: false,
             maxRotationDegree: 10,
             translateMultiplier: -10,
             imageScale: 1.1,
@@ -62,15 +66,17 @@
             transformOrigin: false,
         };
 
-        // shadow opacity is calculated
-        defaults.shadowOpacity = Math.round(100 / (defaults.shadowCount + 1)) / 100;
-
         // merge user settings
         var settings = $.extend(defaults, options);
 
+        // shadow opacity is calculated
+        if (typeof settings.shadowOpacity === 'undefined') {
+            var shadowCount = settings.shadowCount + (settings.hideOriginalImage ? 0 : 1);
+            settings.shadowOpacity = Math.round(100 / shadowCount) / 100;
+        }
+
         // apply the effect to all selected
         return this.each(function() {
-
             var $parallax = $(this),
                 $base = $parallax.children(settings.imageSelector).eq(0),
                 $shadow;
@@ -87,6 +93,10 @@
 
             // image styling
             $base.css('transform', 'scale(' + settings.imageScale + ')');
+
+            if (setings.hideOriginalImage) {
+                $base.css('opacity', 0);
+            }
 
             // create the clones
             for (var i = 1; i <= settings.shadowCount; i++) {
