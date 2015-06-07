@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>ifcanduela/jquery-parallax</title>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="jquery.parallax.js"></script>
+    <style>
+    .wrap {
+        margin: 50px auto;
+        width: 842px;
+    }
+
+    .container {
+        width: 842px;
+        height: 551px;
+    }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>ifcanduela/jquery-parallax</h1>
+
+        <pre><code>
+&lt;style>
+.container {
+    width: 842px;
+    height: 551px;
+}
+&lt;/style>
+
+&lt;div class="container">
+    &lt;img src="fennec.jpg" alt="">
+&lt;/div>
+
+&lt;script>
+    $('.container').parallax({
+        shadowCount: 12,
+        maxRotationDegree: 5,
+    });
+&lt;/script>
+        </code></pre>
+
+        <div class="container">
+            <img src="fennec.jpg" alt="">
+        </div>
+    </div>
+
+    <script>
+        $('.container').parallax({
+            shadowCount: 12,
+            maxRotationDegree: 5,
+        });
+    </script>
+</body>
+</html>
