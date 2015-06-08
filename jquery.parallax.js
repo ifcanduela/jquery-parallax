@@ -51,6 +51,8 @@
  */
  (function ($) {
      $.fn.parallax = function (options) {
+        options = typeof options !== 'object' ? {} : options;
+
         // default settings
         var defaults = {
             imageSelector: 'img',
@@ -103,7 +105,7 @@
                 $shadow = $base.clone();
 
                 // basic attributes
-                $shadow.attr('id', 'parallax-shadow-' + i).addClass('parallax-shadow').data('layer', i);
+                $shadow.addClass('parallax-shadow').data('layer', i);
 
                 // styling
                 $shadow.css({
@@ -121,11 +123,11 @@
 
             $parallax.hover(function (e) {
                 if (settings.hideOnMouseLeave) {
-                    $('.parallax-shadow').show();
+                    $parallax.find('.parallax-shadow').show();
                 }
             }, function (e) {
                 if (settings.hideOnMouseLeave) {
-                    $('.parallax-shadow').hide();
+                    $parallax.find('.parallax-shadow').hide();
                 }
             });
 
@@ -158,12 +160,12 @@
                 var percent, tr_o_x, tr_o_y, transform, degrees, partial_rotate_x, partial_rotate_y;
 
                 // transform the shadows
-                for (var i = 1; i <= settings.shadowCount; i++) {
-                    // the effect will be increased proportionally for successive clones
+                $parallax.find('.parallax-shadow').each(function (i) {
                     percent = i / settings.shadowCount;
                     partial_rotate_x = rotate_x * percent;
                     partial_rotate_y = rotate_y * percent;
                     degrees = Math.round(multiplier * settings.maxRotationDegree * percent);
+
                     move_x = tr_x * percent;
                     move_y = tr_y * percent;
 
@@ -171,13 +173,13 @@
                     if (settings.transformOrigin === true) {
                         tr_o_x = x_pos;
                         tr_o_y = y_pos;
-                        $('#parallax-shadow-' + i).css('transform-origin', tr_o_x + 'px ' + tr_o_y + 'px');
+                        $(this).css('transform-origin', tr_o_x + 'px ' + tr_o_y + 'px');
                     }
 
                     transform = 'perspective(' + settings.perspective + 'px) translate3d(' + move_x + 'px, ' + move_y + 'px, ' + i + 'px) rotate3d(' + partial_rotate_x + ', ' + partial_rotate_y + ', 0, ' + degrees + 'deg) scale(' + settings.imageScale + ')';
 
-                    $('#parallax-shadow-' + i).css('transform', transform);
-                }
+                    $(this).css('transform', transform);
+                });
             });
         });
     };
